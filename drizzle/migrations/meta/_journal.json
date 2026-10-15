@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792044608438,
+      "tag": "0000_create_medibridge_enquiries",
+      "breakpoints": true
+    }
+  ]
 }

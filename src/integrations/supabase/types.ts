@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      medibridge_enquiries: {
+        Row: {
+          consent: boolean
+          country: string
+          created_at: string
+          full_name: string
+          id: string
+          message: string
+          phone: string
+          treatment: string
+        }
+        Insert: {
+          consent?: boolean
+          country: string
+          created_at?: string
+          full_name: string
+          id?: string
+          message?: string
+          phone: string
+          treatment: string
+        }
+        Update: {
+          consent?: boolean
+          country?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          message?: string
+          phone?: string
+          treatment?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
