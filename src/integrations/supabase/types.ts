@@ -23,6 +23,7 @@ export type Database = {
           id: string
           message: string
           phone: string
+          report_paths: string[] | null
           treatment: string
         }
         Insert: {
@@ -33,6 +34,7 @@ export type Database = {
           id?: string
           message?: string
           phone: string
+          report_paths?: string[] | null
           treatment: string
         }
         Update: {
@@ -43,6 +45,7 @@ export type Database = {
           id?: string
           message?: string
           phone?: string
+          report_paths?: string[] | null
           treatment?: string
         }
         Relationships: []
