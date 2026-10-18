@@ -283,9 +283,12 @@ function Gallery() {
 export function IntroVideo() {
   return (
     <video
-      controls
-      preload="none"
-      poster={posterImg}
+  controls
+  autoPlay
+  muted
+  playsInline
+  preload="auto"
+  poster={posterImg}
       className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-md"
     >
       <source
