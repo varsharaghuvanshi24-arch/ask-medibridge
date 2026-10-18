@@ -93,10 +93,84 @@ main button[class*="rounded-full"][class*="h-1"]:active {
   box-shadow: none;
 }
 
+/* ---------- Ambient background (soft light drifting behind the hero) ---------- */
+.ambient-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-blob {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.ambient-blob-1 {
+  width: 34rem;
+  height: 34rem;
+  top: -12rem;
+  left: -10rem;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--brand) 40%, transparent) 0%,
+    transparent 68%
+  );
+  animation: ambient-drift-1 24s ease-in-out infinite alternate;
+}
+.ambient-blob-2 {
+  width: 30rem;
+  height: 30rem;
+  right: -8rem;
+  bottom: -12rem;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--primary) 24%, transparent) 0%,
+    transparent 68%
+  );
+  animation: ambient-drift-2 28s ease-in-out infinite alternate;
+}
+.ambient-blob-3 {
+  width: 22rem;
+  height: 22rem;
+  top: 28%;
+  left: 46%;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--brand) 26%, transparent) 0%,
+    transparent 68%
+  );
+  animation: ambient-drift-3 32s ease-in-out infinite alternate;
+}
+@keyframes ambient-drift-1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(7rem, 5rem, 0) scale(1.15);
+  }
+}
+@keyframes ambient-drift-2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-8rem, -4rem, 0) scale(0.95);
+  }
+}
+@keyframes ambient-drift-3 {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+  to {
+    transform: translate3d(-5rem, 6rem, 0) scale(1.2);
+  }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .hero-in,
-  .hero-img-in {
+  .hero-img-in,
+  .ambient-blob {
     animation: none;
   }
   .reveal,
