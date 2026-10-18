@@ -2,14 +2,13 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { FileCheck2, Lock, UserRoundCheck } from "lucide-react";
 
 import arrivalImg from "@/assets/medibridge-arrival.jpg";
-import hospitalImg from "@/assets/medibridge-hospital.jpg";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FeaturedDoctors } from "@/directory";
+import { FeaturedDoctors, HospitalCard } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
 import { faqs, hospitals, site, treatments } from "@/site-data";
 import { IntroVideo, Steps } from "@/site-pages";
@@ -160,37 +159,18 @@ function Home() {
           title="Hospitals and doctors, compared with you"
           text="Your coordinator shares options that fit your treatment plan and budget."
         />
-        <div className="grid items-start gap-5 md:grid-cols-[1.1fr_1fr]">
-          <img
-            src={hospitalImg}
-            alt="A bright hospital corridor with a doctor and a coordinator walking together"
-            width={1600}
-            height={1104}
-            loading="lazy"
-            className="aspect-[4/3] w-full rounded-3xl object-cover shadow-md"
-          />
-          <ul className="grid gap-3">
-            {hospitals.slice(0, 3).map((h) => (
-              <li key={h.slug}>
-                <Link to="/hospitals/$slug" params={{ slug: h.slug }} className="block">
-                  <CardBox className="p-4 transition-shadow hover:shadow-md sm:p-4">
-                    <h3 className="text-base font-semibold text-primary">{h.name}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {h.city} · {h.specialties.join(", ")}
-                    </p>
-                  </CardBox>
-                </Link>
-              </li>
-            ))}
-            <li>
-              <PageLink
-                page="hospitals"
-                className="text-sm font-semibold text-brand hover:underline"
-              >
-                View hospitals
-              </PageLink>
-            </li>
-          </ul>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {hospitals.slice(0, 6).map((h) => (
+            <HospitalCard key={h.slug} h={h} />
+          ))}
+        </div>
+        <div className="mt-8">
+          <PageLink
+            page="hospitals"
+            className="text-sm font-semibold text-brand hover:underline"
+          >
+            See all {hospitals.length} hospitals
+          </PageLink>
         </div>
       </Section>
 
