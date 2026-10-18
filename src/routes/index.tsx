@@ -26,6 +26,16 @@ import {
 
 // Title and description come from __root.tsx.
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: `${site.name} | Medical travel to ${site.destination}` },
+      { name: "description", content: site.description },
+      { property: "og:title", content: `${site.name} | Medical travel to ${site.destination}` },
+      { property: "og:description", content: site.description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Home,
 });
 
@@ -65,13 +75,17 @@ function Home() {
           />
         </Container>
       </div>
-{/* Video */}
-
-<Section tone="surface">
-
-<SectionHeading eyebrow="Introduction" title={'Meet ${site.shortName) <div className="mx-auto max-w-4x1">
-
-<IntroVideo
+      {/* Introduction video */}
+      <Section tone="surface">
+        <SectionHeading
+          eyebrow="Introduction"
+          title={`Meet ${site.shortName}`}
+          text="Learn how we support your care journey from your first enquiry to follow-up."
+        />
+        <div className="mx-auto max-w-4xl">
+          <IntroVideo />
+        </div>
+      </Section>
 
       {/* Trust points */}
       <Section className="py-10 sm:py-12">
