@@ -90,7 +90,7 @@ const DOCTOR_PHOTO_LINKS: Record<string, string> = {
   "manisha-singh": "https://i.ibb.co/4Z0SmCJ4/dr-MANISHA-SINGH.jpg",
   "rajesh-ahlawat": "https://ibb.co/392hdKJ9/dr-rajesh-ahlawat.jpg",
   "a-s-soin": "https://ibb.co/VcKWV3Vq/dr-a-s-soin.jpg",
-  "sandeep-vaishya:"https://ibb.co/wDVVcp2/dr-sandeep-vaishya.jpg",
+  "sandeep-vaishya": "https://i.ibb.co/wDVVcp2/dr-sandeep-vaishya.jpg",,
 };
 
 export const HOSPITAL_COVER: Record<string, string> = {
