@@ -47,6 +47,7 @@ export function ScrollReveal() {
         blocks = Array.from(document.querySelectorAll<HTMLElement>("main > *")).slice(1);
       }
       for (const block of blocks) {
+        if (block.hasAttribute("data-no-reveal")) continue;
         const grids = Array.from(block.querySelectorAll<HTMLElement>(".grid")).filter((g) => {
           const outer = g.parentElement?.closest(".grid");
           return !outer || !block.contains(outer);

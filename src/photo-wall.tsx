@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 import { usableImage } from "@/media";
-import { Section, SectionHeading } from "@/site-ui";
+import { Container, Section, SectionHeading } from "@/site-ui";
 
 /**
  * PHOTOS FOR THE HOME PAGE.
@@ -44,7 +44,17 @@ export const HOTEL_PHOTOS: string[] = [...fromFolder(hotelFiles), ...HOTEL_LINKS
 // Guest photos (plain pictures, no boxes).
 export const GUEST_PHOTOS: string[] = [...fromFolder(guestFiles), ...GUEST_LINKS];
 
-function WallImage({ src, alt }: { src: string; alt: string }) {
+function WallImage({
+  src,
+  alt,
+  index = 0,
+  staggered = false,
+}: {
+  src: string;
+  alt: string;
+  index?: number;
+  staggered?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
   return (
@@ -53,19 +63,28 @@ function WallImage({ src, alt }: { src: string; alt: string }) {
       alt={alt}
       loading="lazy"
       onError={() => setFailed(true)}
-      className="mb-3 block h-auto w-full break-inside-avoid rounded-2xl"
+      style={staggered ? ({ "--i": Math.min(index, 12) } as CSSProperties) : undefined}
+      className={`mb-3 block h-auto w-full break-inside-avoid rounded-2xl${staggered ? " wall-item" : ""}`}
     />
   );
 }
 
 /** Pinterest-style wall: pictures keep their own height and flow into columns. */
-function MasonryWall({ images, alt }: { images: string[]; alt: string }) {
+function MasonryWall({
+  images,
+  alt,
+  staggered = false,
+}: {
+  images: string[];
+  alt: string;
+  staggered?: boolean;
+}) {
   const list = images.map(usableImage).filter(Boolean);
   if (list.length === 0) return null;
   return (
     <div className="columns-2 gap-3 md:columns-3 lg:columns-4">
       {list.map((src, i) => (
-        <WallImage key={`${src}-${i}`} src={src} alt={`${alt} ${i + 1}`} />
+        <WallImage key={`${src}-${i}`} src={src} alt={`${alt} ${i + 1}`} index={i} staggered={staggered} />
       ))}
     </div>
   );
@@ -81,16 +100,60 @@ export function GuestPhotos() {
   );
 }
 
+/**
+ * A dim "room" with a frosted-glass panel. When it scrolls into view the panel opens,
+ * its edges catch the light, the room brightens and the pictures rise in one by one.
+ */
+function GlassRoom({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setOpen(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setOpen(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} data-no-reveal="" className={`glass-room${open ? " is-open" : ""}`}>
+      {children}
+    </section>
+  );
+}
+
 export function HotelPhotos() {
   if (HOTEL_PHOTOS.map(usableImage).filter(Boolean).length === 0) return null;
   return (
-    <Section tone="surface">
-      <SectionHeading
-        eyebrow="Stay"
-        title="Where you will stay"
-        text="A look at the rooms and spaces where our guests stay."
-      />
-      <MasonryWall images={HOTEL_PHOTOS} alt="Guest stay" />
-    </Section>
+    <GlassRoom>
+      <Container className="py-16 sm:py-20">
+        <SectionHeading
+          eyebrow="Stay"
+          title="Where you will stay"
+          text="A look at the rooms and spaces where our guests stay."
+        />
+        <div className="glass-panel">
+          <span className="glass-rim glass-rim-top" aria-hidden="true" />
+          <span className="glass-rim glass-rim-bottom" aria-hidden="true" />
+          <MasonryWall images={HOTEL_PHOTOS} alt="Guest stay" staggered />
+        </div>
+      </Container>
+    </GlassRoom>
   );
 }
