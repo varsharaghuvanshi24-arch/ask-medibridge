@@ -88,11 +88,9 @@ const DOCTOR_PHOTO_LINKS: Record<string, string> = {
   "aman-priya-khanna": "https://i.ibb.co/KjWSGgCV/dr-AMAN-PRIYA-KHANNA.jpg",
   "manish-vaish": "https://i.ibb.co/v61zKkG1/dr-manish-vaish.jpg",
   "manisha-singh": "https://i.ibb.co/4Z0SmCJ4/dr-MANISHA-SINGH.jpg",
-"rajesh-ahlawat": "https://i.ibb.co/.../dr-rajesh-ahlawat.jpg",
-"a-s-soin": "https://i.ibb.co/.../dr-a-s-soin.jpg",
-"sandeep-vaishya": "https://i.ibb.co/.../dr-sandeep-vaishya.jpg",
-};
-
+"rajesh-ahlawat": "/doctors/ahlawat.jpg",
+"a-s-soin": "/doctors/soin.jpg",
+"sandeep-vaishya": "/doctors/vaishya.jpg",
 export const HOSPITAL_COVER: Record<string, string> = {
   ...HOSPITAL_COVER_LINKS,
   ...bySlug(hospitalFiles),
