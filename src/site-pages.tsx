@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Check, ExternalLink, Mail, MapPin, Phone, Stethoscope } from "lucide-react";
+import { Check, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 
 import arrivalImg from "@/assets/medibridge-arrival.jpg";
 import consultationImg from "@/assets/medibridge-consultation.jpg";
 import hospitalImg from "@/assets/medibridge-hospital.jpg";
 import posterImg from "@/assets/medibridge-intro-poster.jpg";
+import { DoctorsPage, HospitalsPage } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
 import {
   doctors,
@@ -100,82 +101,6 @@ export function Steps() {
         </li>
       ))}
     </ol>
-  );
-}
-
-function Hospitals() {
-  return (
-    <Page slug="hospitals">
-      <Section>
-        <PlaceholderNote>
-          Hospital names and details are placeholders. Edit <code>hospitals</code> in{" "}
-          <code>src/site-data.ts</code> to add your real partners.
-        </PlaceholderNote>
-        <div className="grid gap-5 sm:grid-cols-2">
-          {hospitals.map((h) => (
-            <CardBox key={h.name} className="overflow-hidden p-0 sm:p-0">
-              <img
-                src={hospitalImg}
-                alt=""
-                width={1600}
-                height={1104}
-                loading="lazy"
-                className="aspect-[16/8] w-full object-cover"
-              />
-              <div className="p-5 sm:p-6">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-xl font-semibold text-primary">{h.name}</h3>
-                  {h.placeholder && <PlaceholderBadge />}
-                </div>
-                <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4" aria-hidden /> {h.city}
-                </p>
-                <p className="mt-3 text-sm text-muted-foreground">{h.about}</p>
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {h.specialties.map((s) => (
-                    <li
-                      key={s}
-                      className="rounded-full bg-surface px-3 py-1 text-xs font-medium text-primary"
-                    >
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardBox>
-          ))}
-        </div>
-      </Section>
-    </Page>
-  );
-}
-
-function Doctors() {
-  return (
-    <Page slug="doctors">
-      <Section>
-        <PlaceholderNote>
-          Doctor profiles are placeholders. Edit <code>doctors</code> in{" "}
-          <code>src/site-data.ts</code> to add real specialists, with their consent.
-        </PlaceholderNote>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {doctors.map((d, i) => (
-            <CardBox key={i}>
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-surface text-brand">
-                <Stethoscope className="h-6 w-6" aria-hidden />
-              </span>
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <h3 className="text-lg font-semibold text-primary">{d.name}</h3>
-                {d.placeholder && <PlaceholderBadge />}
-              </div>
-              <p className="mt-1 text-sm font-medium text-brand">{d.speciality}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{d.hospital}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{d.experience}</p>
-            </CardBox>
-          ))}
-        </div>
-      </Section>
-    </Page>
   );
 }
 
@@ -515,9 +440,9 @@ export function renderPage(slug: string): ReactNode {
     case "about":
       return <About />;
     case "hospitals":
-      return <Hospitals />;
+      return <HospitalsPage />;
     case "doctors":
-      return <Doctors />;
+      return <DoctorsPage />;
     case "treatments":
       return <Treatments />;
     case "services":

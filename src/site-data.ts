@@ -22,10 +22,10 @@ export const site = {
   // placeholder on the contact page, and the call / WhatsApp buttons fall back
   // to the enquiry form.
   contact: {
-    email: "",
-    phone: "", // include country code, e.g. "+91 98765 43210"
-    whatsapp: "", // digits only with country code, e.g. "919876543210"
-    address: "",
+    email: "medibridgeinc@gmail.com",
+    phone: "+91 92118 25898", // include country code
+    whatsapp: "919211825898", // digits only with country code
+    address: "Plot No. 1199, Sector 46, Near Bakhtawar Chowk, Gurugram, Haryana 122003, India",
     hours: "",
   },
 };
@@ -218,86 +218,385 @@ export const treatments: Treatment[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Hospitals and doctors (PLACEHOLDERS: replace with real partners)    */
+/* Hospitals and doctors                                               */
+/* Photos live in src/media.ts. Qualifications / experience / languages */
+/* for doctors are left empty on purpose: fill them from each          */
+/* hospital's official profile. Empty values are hidden on the page.   */
 /* ------------------------------------------------------------------ */
 
+export type HospitalStat = { label: string; value: string };
+
 export type Hospital = {
+  slug: string;
   name: string;
+  accreditations: string[];
+  area: string;
   city: string;
+  address: string;
+  stats: HospitalStat[];
+  summary: string;
+  overview: string;
+  /** Key specialties / centres of excellence (also used as filter tags). */
   specialties: string[];
+  mapQuery: string;
+  /** Kept for older code that reads `about`. */
   about: string;
-  placeholder?: boolean;
 };
 
+type HospitalInput = Omit<Hospital, "about" | "mapQuery" | "address"> & { address?: string };
+
+function hospital(h: HospitalInput): Hospital {
+  const address = h.address ?? `${h.area}, ${h.city}`;
+  return { ...h, address, about: h.summary, mapQuery: `${h.name}, ${address}` };
+}
+
 export const hospitals: Hospital[] = [
-  {
-    name: "Partner hospital 1",
-    city: "City to be added",
-    specialties: ["Cardiology", "Orthopaedics"],
-    about: "Hospital description, accreditation details and facilities to be added.",
-    placeholder: true,
-  },
-  {
-    name: "Partner hospital 2",
-    city: "City to be added",
-    specialties: ["Oncology", "Neurology"],
-    about: "Hospital description, accreditation details and facilities to be added.",
-    placeholder: true,
-  },
-  {
-    name: "Partner hospital 3",
-    city: "City to be added",
-    specialties: ["Gastroenterology", "Kidney care"],
-    about: "Hospital description, accreditation details and facilities to be added.",
-    placeholder: true,
-  },
-  {
-    name: "Partner hospital 4",
-    city: "City to be added",
-    specialties: ["Fertility", "Eye care"],
-    about: "Hospital description, accreditation details and facilities to be added.",
-    placeholder: true,
-  },
+  hospital({
+    slug: "fortis-memorial",
+    name: "Fortis Memorial Research Institute",
+    accreditations: ["JCI", "NABH", "NABL", "CEA"],
+    area: "Sector 44, Opp. HUDA City Centre",
+    city: "Gurugram",
+    stats: [
+      { label: "Beds", value: "311 (expandable to 1000)" },
+      { label: "Operating theatres", value: "15 modular" },
+      { label: "Super-specialties", value: "30+" },
+    ],
+    summary: "Flagship quaternary-care hospital of Fortis Healthcare.",
+    overview:
+      "Fortis Memorial Research Institute is the flagship quaternary-care hospital of Fortis Healthcare. It offers more than 30 super-specialties, including cardiac sciences, neurosciences, oncology, renal and liver transplant, and bone marrow transplant.",
+    specialties: ["Oncology", "Neurosciences", "Cardiac Sciences", "BMT"],
+  }),
+  hospital({
+    slug: "medanta",
+    name: "Medanta — The Medicity",
+    accreditations: ["JCI", "NABH"],
+    area: "Sector 38",
+    city: "Gurugram",
+    stats: [
+      { label: "Beds", value: "1600+" },
+      { label: "Operating theatres", value: "37+" },
+      { label: "ICU beds", value: "300+" },
+      { label: "Doctors", value: "800+" },
+      { label: "Campus", value: "43 acres" },
+      { label: "Patients from", value: "130+ countries" },
+    ],
+    summary: "A large multi-super-specialty medical city founded by Dr. Naresh Trehan.",
+    overview:
+      "Medanta — The Medicity is a large multi-super-specialty hospital campus founded by cardiac surgeon Dr. Naresh Trehan. It has treated patients from more than 130 countries, with particular strength in cardiac sciences, liver transplant, oncology and kidney transplant.",
+    specialties: ["Cardiac Sciences", "Liver Transplant", "Oncology", "Kidney Transplant"],
+  }),
+  hospital({
+    slug: "artemis",
+    name: "Artemis Hospital",
+    accreditations: ["JCI", "NABH"],
+    area: "Sector 51",
+    city: "Gurugram",
+    stats: [
+      { label: "Beds", value: "750+" },
+      { label: "Established", value: "2007" },
+      { label: "Centres of Excellence", value: "12" },
+      { label: "Full-time doctors", value: "400+" },
+      { label: "Specialties", value: "40+" },
+    ],
+    summary: "The first hospital in Gurugram to hold both JCI and NABH accreditation.",
+    overview:
+      "Artemis Hospital opened in 2007 and was the first hospital in Gurugram to receive both JCI and NABH accreditation. It runs 12 Centres of Excellence with over 400 full-time doctors across more than 40 specialties.",
+    specialties: ["Cardiology", "Oncology", "Neurosurgery", "Orthopedics"],
+  }),
+  hospital({
+    slug: "paras",
+    name: "Paras Health",
+    accreditations: ["NABH", "NABL"],
+    area: "C-1, Sushant Lok Phase I, Sector 43",
+    city: "Gurugram",
+    stats: [
+      { label: "Beds", value: "300" },
+      { label: "ICU beds", value: "80" },
+      { label: "Established", value: "2006" },
+      { label: "Specialties", value: "36" },
+    ],
+    summary: "Flagship of the Paras Health network, strong in IVF, neurosciences and cardiology.",
+    overview:
+      "Paras Health in Sushant Lok is the flagship hospital of the Paras Health network. It has 300 beds, including 80 ICU beds, and covers 36 specialties with particular strength in IVF and fertility, neurosciences and cardiology.",
+    specialties: ["Neurosciences", "Cardiology", "IVF", "Orthopedics"],
+  }),
+  hospital({
+    slug: "shalby",
+    name: "Shalby International Hospital",
+    accreditations: ["NABH"],
+    area: "Golf Course Road, DLF Phase 5, Sector 53",
+    city: "Gurugram",
+    stats: [
+      { label: "Beds", value: "150" },
+      { label: "ICU beds", value: "35" },
+      { label: "Established", value: "2018" },
+      { label: "Specialties", value: "30+" },
+    ],
+    summary: "A focused, high-end surgical hospital with several centres of excellence.",
+    overview:
+      "Shalby International Hospital is a focused, high-end surgical hospital that now covers more than 30 specialties. Its Centres of Excellence include oncology, neurosciences, nephrology and transplants.",
+    specialties: ["BMT", "Urology", "Oncology", "Nephrology"],
+  }),
+  hospital({
+    slug: "ck-birla",
+    name: "CK Birla Hospital",
+    accreditations: ["NABH"],
+    area: "Block J, Mayfield Garden, Sector 51",
+    city: "Gurugram",
+    stats: [
+      { label: "ICU beds", value: "70" },
+      { label: "Operating theatres", value: "5 modular" },
+      { label: "NICU", value: "15-bed Level III" },
+    ],
+    summary:
+      "NABH-accredited multi-specialty hospital, a regional leader in mother and child care.",
+    overview:
+      "CK Birla Hospital is an NABH-accredited multi-specialty hospital run by the CK Birla Group. It is a regional leader in mother and child care, with a water-birthing suite, a 15-bed Level III NICU and a modern IVF lab.",
+    specialties: ["Obstetrics & Gynae", "Fertility / IVF", "Neonatology", "Orthopedics"],
+  }),
+  hospital({
+    slug: "max-saket",
+    name: "Max Super Speciality Hospital, Saket",
+    accreditations: ["JCI", "NABH", "NABL"],
+    area: "1, 2 Press Enclave Marg, Saket Institutional Area",
+    city: "New Delhi",
+    stats: [
+      { label: "Beds", value: "530+" },
+      { label: "Specialties", value: "38" },
+      { label: "Notable", value: "Asia's first BrainSUITE" },
+    ],
+    summary: "Flagship of Max Healthcare, a hub for neuro, cancer, cardiac and transplant care.",
+    overview:
+      "Max Super Speciality Hospital in Saket is the flagship of Max Healthcare. It is a regional hub for neurovascular intervention, targeted cancer treatment, complex cardiac procedures and organ transplants, and houses Asia's first BrainSUITE.",
+    specialties: ["Oncology", "Neurosciences", "Transplants", "Bariatric Surgery"],
+  }),
+  hospital({
+    slug: "blk-max",
+    name: "BLK-Max Super Speciality Hospital",
+    accreditations: ["JCI", "NABH", "NABL"],
+    area: "Pusa Road, Rajendra Place",
+    city: "New Delhi",
+    stats: [
+      { label: "Beds", value: "650" },
+      { label: "Operating theatres", value: "17 modular" },
+      { label: "Critical care beds", value: "125" },
+    ],
+    summary: "Home to one of Asia's largest bone marrow transplant centres.",
+    overview:
+      "BLK-Max Super Speciality Hospital is home to one of Asia's largest bone marrow transplant centres. It is also strong in oncology, robotic surgery and cardiac sciences, and has a dedicated international patient team.",
+    specialties: ["Oncology", "BMT", "Cardiac Surgery", "Orthopedics"],
+  }),
 ];
 
 export type Doctor = {
+  slug: string;
   name: string;
   speciality: string;
+  hospitalSlug: string;
+  /** Hospital name, filled in automatically from `hospitalSlug`. */
   hospital: string;
+  bio: string;
+  focus: string[];
+  /** Leave "" until verified from the hospital's official profile; empty rows are hidden. */
+  qualifications: string;
   experience: string;
-  placeholder?: boolean;
+  languages: string;
 };
 
+type DoctorInput = {
+  slug: string;
+  name: string;
+  speciality: string;
+  hospitalSlug: string;
+  focus: string[];
+  bio?: string;
+  qualifications?: string;
+  experience?: string;
+  languages?: string;
+};
+
+const hospitalName = (slug: string) => hospitals.find((h) => h.slug === slug)?.name ?? "";
+
+function doctor(d: DoctorInput): Doctor {
+  const hospital = hospitalName(d.hospitalSlug);
+  return {
+    slug: d.slug,
+    name: d.name,
+    speciality: d.speciality,
+    hospitalSlug: d.hospitalSlug,
+    hospital,
+    bio: d.bio ?? `${d.name} is a specialist in ${d.speciality} at ${hospital}.`,
+    focus: d.focus,
+    qualifications: d.qualifications ?? "",
+    experience: d.experience ?? "",
+    languages: d.languages ?? "",
+  };
+}
+
 export const doctors: Doctor[] = [
-  {
-    name: "Doctor name to be added",
+  // Fortis Memorial Research Institute
+  doctor({
+    slug: "ashok-seth",
+    name: "Dr. Ashok Seth",
+    speciality: "Interventional Cardiology",
+    hospitalSlug: "fortis-memorial",
+    bio: "Dr. Ashok Seth is Chairman of the Fortis Escorts Heart Institute at Fortis Memorial Research Institute, working in interventional cardiology.",
+    focus: ["Complex angioplasty", "Structural heart procedures"],
+  }),
+  doctor({
+    slug: "rahul-bhargava",
+    name: "Dr. Rahul Bhargava",
+    speciality: "Haemato-Oncology & BMT",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Blood cancers", "Bone marrow / stem-cell transplant"],
+  }),
+  doctor({
+    slug: "rama-joshi",
+    name: "Dr. Rama Joshi",
+    speciality: "Gynaecologic Oncology",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Cancers of the cervix, ovary and uterus"],
+  }),
+  doctor({
+    slug: "rana-patir",
+    name: "Dr. Rana Patir",
+    speciality: "Neurosurgery",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Brain surgery", "Spine surgery"],
+  }),
+  doctor({
+    slug: "vivek-vij",
+    name: "Dr. Vivek Vij",
+    speciality: "Liver Transplant",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Liver transplantation", "Advanced liver disease"],
+  }),
+  doctor({
+    slug: "praveer-agarwal",
+    name: "Dr. Praveer Agarwal",
+    speciality: "Interventional Cardiology",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Angioplasty", "Coronary interventions"],
+  }),
+  doctor({
+    slug: "sandeep-vaishya",
+    name: "Dr. Sandeep Vaishya",
+    speciality: "Neurosurgery",
+    hospitalSlug: "fortis-memorial",
+    focus: ["Brain surgery", "Spine surgery"],
+  }),
+  // Medanta — The Medicity
+  doctor({
+    slug: "naresh-trehan",
+    name: "Dr. Naresh Trehan",
+    speciality: "Cardiac Surgery",
+    hospitalSlug: "medanta",
+    bio: "Dr. Naresh Trehan is a cardiac surgeon and the founder of Medanta — The Medicity.",
+    focus: ["Bypass surgery", "Heart-valve surgery"],
+  }),
+  doctor({
+    slug: "a-s-soin",
+    name: "Dr. A. S. Soin",
+    speciality: "Liver Transplant",
+    hospitalSlug: "medanta",
+    focus: ["Liver transplantation"],
+  }),
+  doctor({
+    slug: "rajesh-ahlawat",
+    name: "Dr. Rajesh Ahlawat",
+    speciality: "Urology",
+    hospitalSlug: "medanta",
+    focus: ["Kidney stones", "Prostate conditions", "Urological cancers"],
+  }),
+  doctor({
+    slug: "ashok-rajgopal",
+    name: "Dr. Ashok Rajgopal",
+    speciality: "Orthopedics",
+    hospitalSlug: "medanta",
+    focus: ["Joint replacement"],
+  }),
+  doctor({
+    slug: "yugal-kishore-mishra",
+    name: "Dr. Yugal Kishore Mishra",
+    speciality: "CTVS (Cardiothoracic & Vascular Surgery)",
+    hospitalSlug: "medanta",
+    focus: ["Heart surgery", "Chest surgery"],
+  }),
+  doctor({
+    slug: "neelam-mohan",
+    name: "Dr. Neelam Mohan",
+    speciality: "Pediatric Gastroenterology & Liver Transplant",
+    hospitalSlug: "medanta",
+    focus: ["Children's liver conditions", "Children's digestive conditions"],
+  }),
+  doctor({
+    slug: "sushila-kataria",
+    name: "Dr. Sushila Kataria",
+    speciality: "Internal Medicine & Infectious Diseases",
+    hospitalSlug: "medanta",
+    focus: ["Complex medical conditions", "Infections"],
+  }),
+  // Artemis Hospital
+  doctor({
+    slug: "ashok-vaid",
+    name: "Dr. Ashok Vaid",
+    speciality: "Medical Oncology",
+    hospitalSlug: "artemis",
+    focus: ["Chemotherapy", "Targeted therapy", "Immunotherapy"],
+  }),
+  doctor({
+    slug: "subhash-chandra",
+    name: "Dr. Subhash Chandra",
     speciality: "Cardiology",
-    hospital: "Partner hospital 1",
-    experience: "Qualifications and experience to be added",
-    placeholder: true,
-  },
-  {
-    name: "Doctor name to be added",
-    speciality: "Orthopaedics",
-    hospital: "Partner hospital 1",
-    experience: "Qualifications and experience to be added",
-    placeholder: true,
-  },
-  {
-    name: "Doctor name to be added",
-    speciality: "Oncology",
-    hospital: "Partner hospital 2",
-    experience: "Qualifications and experience to be added",
-    placeholder: true,
-  },
-  {
-    name: "Doctor name to be added",
-    speciality: "Gastroenterology",
-    hospital: "Partner hospital 3",
-    experience: "Qualifications and experience to be added",
-    placeholder: true,
-  },
+    hospitalSlug: "artemis",
+    focus: ["Heart-disease diagnosis and management"],
+  }),
+  doctor({
+    slug: "sanjay-gogoi",
+    name: "Dr. Sanjay Gogoi",
+    speciality: "Urology",
+    hospitalSlug: "artemis",
+    focus: ["Kidney care", "Prostate care", "Urological conditions"],
+  }),
+  // Paras Health
+  doctor({
+    slug: "aman-priya-khanna",
+    name: "Dr. Aman Priya Khanna",
+    speciality: "Bariatric & Metabolic Surgery",
+    hospitalSlug: "paras",
+    focus: ["Weight-loss surgery", "Metabolic surgery"],
+  }),
+  doctor({
+    slug: "manish-vaish",
+    name: "Dr. Manish Vaish",
+    speciality: "Neurosurgery",
+    hospitalSlug: "paras",
+    focus: ["Brain surgery", "Spine surgery"],
+  }),
+  doctor({
+    slug: "manisha-singh",
+    name: "Dr. Manisha Singh",
+    speciality: "IVF & Fertility",
+    hospitalSlug: "paras",
+    focus: ["Assisted reproduction"],
+  }),
 ];
+
+/** Doctors shown on the home page. */
+export const featuredDoctorSlugs = [
+  "ashok-seth",
+  "naresh-trehan",
+  "rahul-bhargava",
+  "a-s-soin",
+  "ashok-vaid",
+  "rajesh-ahlawat",
+  "ashok-rajgopal",
+  "manisha-singh",
+];
+
+export const hospitalBySlug = (slug: string) => hospitals.find((h) => h.slug === slug);
+export const doctorBySlug = (slug: string) => doctors.find((d) => d.slug === slug);
 
 /* ------------------------------------------------------------------ */
 /* Services                                                            */
