@@ -88,7 +88,9 @@ const DOCTOR_PHOTO_LINKS: Record<string, string> = {
   "aman-priya-khanna": "https://i.ibb.co/KjWSGgCV/dr-AMAN-PRIYA-KHANNA.jpg",
   "manish-vaish": "https://i.ibb.co/v61zKkG1/dr-manish-vaish.jpg",
   "manisha-singh": "https://i.ibb.co/4Z0SmCJ4/dr-MANISHA-SINGH.jpg",
-  // Still to add (need direct links): rajesh-ahlawat, a-s-soin, sandeep-vaishya
+  "rajesh-ahlawat": "https://ibb.co/392hdKJ9/dr-rajesh-ahlawat.jpg",
+  "a-s-soin": "https://ibb.co/VcKWV3Vq/dr-a-s-soin.jpg",
+  "sandeep-vaishya:"https://ibb.co/wDVVcp2/dr-sandeep-vaishya.jpg",
 };
 
 export const HOSPITAL_COVER: Record<string, string> = {
