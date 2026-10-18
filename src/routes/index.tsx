@@ -65,6 +65,13 @@ function Home() {
           />
         </Container>
       </div>
+{/* Video */}
+
+<Section tone="surface">
+
+<SectionHeading eyebrow="Introduction" title={'Meet ${site.shortName) <div className="mx-auto max-w-4x1">
+
+<IntroVideo
 
       {/* Trust points */}
       <Section className="py-10 sm:py-12">
@@ -195,14 +202,6 @@ function Home() {
               className="border-transparent"
             />
           </div>
-        </div>
-      </Section>
-
-      {/* Video */}
-      <Section tone="surface">
-        <SectionHeading eyebrow="Introduction" title={`Meet ${site.shortName}`} />
-        <div className="mx-auto max-w-4xl">
-          <IntroVideo />
         </div>
       </Section>
 
