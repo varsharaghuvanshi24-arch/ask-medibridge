@@ -280,12 +280,183 @@ main button[class*="rounded-full"][class*="h-1"]:active {
   }
 }
 
+/* ---------- Hero world map: routes flowing to the hospital, heartbeat line, rising crosses ---------- */
+.hero-map {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--brand);
+}
+.hero-map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  /* Keep the left (text) side calmer on wide screens */
+  .hero-map-svg {
+    -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.3) 0%, #000 55%);
+    mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.3) 0%, #000 55%);
+  }
+}
+.map-dots {
+  fill: none;
+  stroke: color-mix(in oklab, var(--primary) 26%, transparent);
+  stroke-width: 4.2;
+  stroke-linecap: round;
+}
+.map-arc {
+  fill: none;
+  stroke: color-mix(in oklab, var(--brand) 40%, transparent);
+  stroke-width: 1.2;
+  stroke-dasharray: 1.2 2.6;
+}
+.map-flow {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 9 91;
+  stroke-dashoffset: 9;
+  animation: map-flow var(--dur, 6s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes map-flow {
+  from {
+    stroke-dashoffset: 9;
+  }
+  to {
+    stroke-dashoffset: -91;
+  }
+}
+.map-node {
+  fill: var(--brand);
+}
+.map-cross {
+  fill: var(--brand);
+}
+.map-ping {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 1.4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-ping 3.6s ease-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.map-ping-hub {
+  stroke-width: 1.8;
+  animation-duration: 3.2s;
+}
+@keyframes map-ping {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(4.2);
+    opacity: 0;
+  }
+}
+
+/* Heartbeat line along the bottom of the hero */
+.hero-ecg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  width: 100%;
+  height: 56px;
+  opacity: 0.6;
+}
+.ecg-track,
+.ecg-sweep {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.ecg-track {
+  stroke: color-mix(in oklab, var(--brand) 28%, transparent);
+  stroke-width: 1.4;
+}
+.ecg-sweep {
+  stroke: var(--brand);
+  stroke-width: 2;
+  stroke-dasharray: 130 870;
+  stroke-dashoffset: 130;
+  animation: ecg-sweep 6s linear infinite;
+}
+@keyframes ecg-sweep {
+  from {
+    stroke-dashoffset: 130;
+  }
+  to {
+    stroke-dashoffset: -870;
+  }
+}
+
+/* Slowly rising medical crosses */
+.hero-plus {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: hero-plus-rise var(--dur, 18s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+.hero-plus::before,
+.hero-plus::after {
+  content: "";
+  position: absolute;
+  border-radius: 2px;
+  background: var(--brand);
+}
+.hero-plus::before {
+  left: 5.5px;
+  top: 0;
+  width: 3px;
+  height: 14px;
+}
+.hero-plus::after {
+  left: 0;
+  top: 5.5px;
+  width: 14px;
+  height: 3px;
+}
+@keyframes hero-plus-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+  }
+  20% {
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-90px) rotate(25deg);
+  }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .hero-in,
   .hero-img-in,
   .ambient-blob {
     animation: none;
+  }
+  /* The map stays as a still picture; only the moving parts are switched off */
+  .map-flow,
+  .map-ping,
+  .ecg-sweep,
+  .hero-plus {
+    display: none;
   }
   .reveal,
   .reveal-fade,
