@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { FeaturedDoctors, HospitalCard } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
+import { HeroMap } from "@/hero-map";
 import { GuestPhotos, HotelPhotos } from "@/photo-wall";
 import { faqs, hospitals, site, treatments } from "@/site-data";
 import { IntroVideo, OfficeMap, Steps } from "@/site-pages";
@@ -43,11 +44,7 @@ function Home() {
     <>
       {/* Hero */}
       <div className="relative overflow-hidden bg-surface">
-        <div className="ambient-bg" aria-hidden="true">
-          <span className="ambient-blob ambient-blob-1" />
-          <span className="ambient-blob ambient-blob-2" />
-          <span className="ambient-blob ambient-blob-3" />
-        </div>
+        <HeroMap />
         <Container className="relative grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:py-20">
           <div>
             <p className="hero-in hero-d1 mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
