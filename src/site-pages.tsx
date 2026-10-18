@@ -283,12 +283,12 @@ function Gallery() {
 export function IntroVideo() {
   return (
     <video
-  controls
-  autoPlay
-  muted
-  playsInline
-  preload="auto"
-  poster={posterImg}
+      controls
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      poster={posterImg}
       className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-md"
     >
       <source
@@ -330,6 +330,49 @@ function Blog() {
         </div>
       </Section>
     </Page>
+  );
+}
+
+/** Google Maps embed for the office address in site.contact.address. */
+function OfficeMap() {
+  const q = site.contact.address;
+  if (!q) return null;
+  const embed = `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
+  const link = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
+  return (
+    <div className="mt-10">
+      <h2 className="text-xl font-semibold text-primary">Find us</h2>
+      <p className="mt-1 text-sm text-muted-foreground">{q}</p>
+      <div className="mt-4 overflow-hidden rounded-2xl border">
+        <iframe
+          title="Medibridge office on Google Maps"
+          src={embed}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+          className="block h-72 w-full border-0 sm:h-96"
+        />
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <a
+          href={directions}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+        >
+          <MapPin className="h-4 w-4" aria-hidden /> Get directions
+        </a>
+        <a
+          href={link}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex h-10 items-center gap-1.5 rounded-full border px-5 text-sm font-semibold text-primary"
+        >
+          Open in Google Maps <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -395,6 +438,7 @@ function Contact() {
           </div>
           <EnquiryForm />
         </div>
+        <OfficeMap />
       </Section>
     </Page>
   );
