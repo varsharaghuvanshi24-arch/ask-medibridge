@@ -42,8 +42,13 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <div className="bg-surface">
-        <Container className="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:py-20">
+      <div className="relative overflow-hidden bg-surface">
+        <div className="ambient-bg" aria-hidden="true">
+          <span className="ambient-blob ambient-blob-1" />
+          <span className="ambient-blob ambient-blob-2" />
+          <span className="ambient-blob ambient-blob-3" />
+        </div>
+        <Container className="relative grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:py-20">
           <div>
             <p className="hero-in hero-d1 mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
               Medical travel to {site.destination}
