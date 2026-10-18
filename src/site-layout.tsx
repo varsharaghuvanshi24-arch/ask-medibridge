@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import markUrl from "@/assets/medibridge-mark.png";
 import { Assistant } from "@/assistant";
+import { ScrollReveal } from "@/scroll-reveal";
 import { legalNav, primaryNav, secondaryNav, site } from "@/site-data";
 import { Container, EnquiryButton, PageLink, phoneHref, whatsappHref } from "@/site-ui";
 
@@ -297,6 +298,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <MobileActions />
       <WhatsAppFloat />
       <Assistant />
+      <ScrollReveal />
     </div>
   );
 }

@@ -232,7 +232,7 @@ function TreatmentChips({ items }: { items: string[] }) {
 
 export function HospitalCard({ h }: { h: Hospital }) {
   return (
-    <CardBox className="group flex flex-col overflow-hidden p-0 transition-shadow hover:shadow-lg sm:p-0">
+    <CardBox className="group flex flex-col overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-0">
       <Link
         to="/hospitals/$slug"
         params={{ slug: h.slug }}
@@ -276,7 +276,7 @@ export function HospitalCard({ h }: { h: Hospital }) {
 
 export function DoctorCard({ d }: { d: Doctor }) {
   return (
-    <CardBox className="group flex flex-col overflow-hidden p-0 transition-shadow hover:shadow-lg sm:p-0">
+    <CardBox className="group flex flex-col overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-0">
       <Link
         to="/doctors/$slug"
         params={{ slug: d.slug }}
