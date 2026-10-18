@@ -1,0 +1,113 @@
+/*
+ * Motion for the Medibridge site.
+ * - Hero entrance (pure CSS, no JS needed)
+ * - Scroll reveal (classes are added by src/scroll-reveal.tsx)
+ * - Button hover polish
+ * Everything switches off for people who prefer reduced motion.
+ */
+
+/* ---------- Hero entrance ---------- */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-in {
+  animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+.hero-d1 {
+  --hero-delay: 60ms;
+}
+.hero-d2 {
+  --hero-delay: 160ms;
+}
+.hero-d3 {
+  --hero-delay: 280ms;
+}
+.hero-d4 {
+  --hero-delay: 400ms;
+}
+
+.hero-img-in {
+  animation: hero-zoom 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s both;
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal,
+.reveal-fade,
+.reveal-item {
+  opacity: 0;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal {
+  transform: translateY(26px);
+}
+.reveal-item {
+  transform: translateY(22px);
+}
+.reveal.is-visible,
+.reveal-fade.is-visible,
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Button hover polish (pill buttons inside the page) ---------- */
+main a[class*="rounded-full"][class*="h-1"],
+main button[class*="rounded-full"][class*="h-1"] {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+main a[class*="rounded-full"][class*="h-1"]:hover,
+main button[class*="rounded-full"][class*="h-1"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -10px rgb(0 0 0 / 0.3);
+}
+main a[class*="rounded-full"][class*="h-1"]:active,
+main button[class*="rounded-full"][class*="h-1"]:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .hero-img-in {
+    animation: none;
+  }
+  .reveal,
+  .reveal-fade,
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  main a[class*="rounded-full"][class*="h-1"]:hover,
+  main button[class*="rounded-full"][class*="h-1"]:hover {
+    transform: none;
+  }
+}
