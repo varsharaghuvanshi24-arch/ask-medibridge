@@ -286,6 +286,7 @@ export function IntroVideo() {
       controls
       autoPlay
       muted
+      loop
       playsInline
       preload="auto"
       poster={posterImg}
