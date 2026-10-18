@@ -261,6 +261,23 @@ function MobileActions() {
   );
 }
 
+/** Floating WhatsApp button, bottom right. Sits above the assistant button. */
+function WhatsAppFloat() {
+  const wa = whatsappHref();
+  if (!wa) return null;
+  return (
+    <a
+      href={wa}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Chat on WhatsApp"
+      className="fixed bottom-36 right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe5b] md:bottom-24 md:right-6"
+    >
+      <MessageCircle className="h-7 w-7" aria-hidden />
+    </a>
+  );
+}
+
 /** Shared page frame: notice, header, page content, footer, mobile bar and assistant. */
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -278,6 +295,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </main>
       <Footer />
       <MobileActions />
+      <WhatsAppFloat />
       <Assistant />
     </div>
   );

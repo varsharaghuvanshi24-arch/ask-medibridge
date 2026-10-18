@@ -334,17 +334,21 @@ function Blog() {
 }
 
 /** Google Maps embed for the office address in site.contact.address. */
-function OfficeMap() {
+export function OfficeMap({ compact = false }: { compact?: boolean }) {
   const q = site.contact.address;
   if (!q) return null;
   const embed = `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
   const link = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
   const directions = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
   return (
-    <div className="mt-10">
-      <h2 className="text-xl font-semibold text-primary">Find us</h2>
-      <p className="mt-1 text-sm text-muted-foreground">{q}</p>
-      <div className="mt-4 overflow-hidden rounded-2xl border">
+    <div className={compact ? "" : "mt-10"}>
+      {!compact && (
+        <>
+          <h2 className="text-xl font-semibold text-primary">Find us</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{q}</p>
+        </>
+      )}
+      <div className={`${compact ? "" : "mt-4 "}overflow-hidden rounded-2xl border`}>
         <iframe
           title="Medibridge office on Google Maps"
           src={embed}
