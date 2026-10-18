@@ -4,37 +4,46 @@ import { usableImage } from "@/media";
 import { Section, SectionHeading } from "@/site-ui";
 
 /**
- * PHOTOS FOR THE HOME PAGE — EDIT THE TWO LISTS BELOW.
+ * PHOTOS FOR THE HOME PAGE.
  *
- * Paste IMGBB *direct* links (they start with https://i.ibb.co/), one per line,
- * each between quotes and followed by a comma. Example:
- *   "https://i.ibb.co/AbCdEfG/room-1.jpg",
+ * Easiest way: upload the pictures straight into these two GitHub folders.
+ * No code to edit, any file name works, any number of pictures:
  *
- * While a list is empty its section stays hidden, so the site never looks broken.
+ *   src/assets/hotel/    -> hotel / stay photos
+ *   src/assets/guests/   -> guest photos
+ *
+ * Supported: .jpg .jpeg .png .webp (not .heic). Pictures show in file-name order.
+ * While a folder is empty its section stays hidden, so the site never looks broken.
+ *
+ * Optional: you can still paste IMGBB *direct* links (https://i.ibb.co/...) below.
  */
+const HOTEL_LINKS: string[] = [];
+const GUEST_LINKS: string[] = [];
+
+function fromFolder(files: Record<string, string>): string[] {
+  return Object.keys(files)
+    .sort()
+    .map((k) => files[k]);
+}
+
+const hotelFiles = import.meta.glob("/src/assets/hotel/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const guestFiles = import.meta.glob("/src/assets/guests/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
 
 // Hotel / stay photos (Pinterest-style wall under the doctors).
-export const HOTEL_PHOTOS: string[] = [
-  "https://ibb.co/TxWFWxqP",
-  "https://ibb.co/SDnK3J8m",
-  "https://ibb.co/SDhqfZkQ",
-  "https://ibb.co/TD85qxnJ",
-  "https://ibb.co/SDMKxT4b",
-  "https://ibb.co/7tBhXd5r",
-  "https://ibb.co/r2CSQLtL",
-  "https://ibb.co/zTWP4Bh9",
-  "https://ibb.co/rGBFr0d8",
-  "https://ibb.co/Gv5Yy850",
-];
+export const HOTEL_PHOTOS: string[] = [...fromFolder(hotelFiles), ...HOTEL_LINKS];
 
 // Guest photos (plain pictures, no boxes).
-export const GUEST_PHOTOS: string[] = [
-  "https://ibb.co/PGqzM19Q",
-  "https://ibb.co/RGGTD2gf",
-  "https://ibb.co/PsMpqJdP",
-  "https://ibb.co/gLcxXMNC",
-  "https://ibb.co/b5bdLvbY",
-];
+export const GUEST_PHOTOS: string[] = [...fromFolder(guestFiles), ...GUEST_LINKS];
+
 function WallImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
