@@ -12,7 +12,7 @@ import { FeaturedDoctors, HospitalCard } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
 import { GuestPhotos, HotelPhotos } from "@/photo-wall";
 import { faqs, hospitals, site, treatments } from "@/site-data";
-import { IntroVideo, Steps } from "@/site-pages";
+import { IntroVideo, OfficeMap, Steps } from "@/site-pages";
 import {
   CardBox,
   Container,
@@ -214,6 +214,12 @@ function Home() {
             </AccordionItem>
           ))}
         </Accordion>
+      </Section>
+
+      {/* Map */}
+      <Section id="find-us">
+        <SectionHeading eyebrow="Visit us" title="Find us" text={site.contact.address} />
+        <OfficeMap compact />
       </Section>
 
       {/* Enquiry */}
