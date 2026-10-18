@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { FeaturedDoctors } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
 import { faqs, hospitals, site, treatments } from "@/site-data";
 import { IntroVideo, Steps } from "@/site-pages";
@@ -18,8 +19,6 @@ import {
   ContactValue,
   EnquiryButton,
   PageLink,
-  PlaceholderBadge,
-  PlaceholderNote,
   Section,
   SectionHeading,
 } from "@/site-ui";
@@ -161,10 +160,6 @@ function Home() {
           title="Hospitals and doctors, compared with you"
           text="Your coordinator shares options that fit your treatment plan and budget."
         />
-        <PlaceholderNote>
-          Partner hospital details are placeholders. Edit <code>hospitals</code> in{" "}
-          <code>src/site-data.ts</code>.
-        </PlaceholderNote>
         <div className="grid items-start gap-5 md:grid-cols-[1.1fr_1fr]">
           <img
             src={hospitalImg}
@@ -176,14 +171,15 @@ function Home() {
           />
           <ul className="grid gap-3">
             {hospitals.slice(0, 3).map((h) => (
-              <li key={h.name}>
-                <CardBox className="p-4 sm:p-4">
-                  <div className="flex flex-wrap items-center gap-2">
+              <li key={h.slug}>
+                <Link to="/hospitals/$slug" params={{ slug: h.slug }} className="block">
+                  <CardBox className="p-4 transition-shadow hover:shadow-md sm:p-4">
                     <h3 className="text-base font-semibold text-primary">{h.name}</h3>
-                    {h.placeholder && <PlaceholderBadge />}
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">{h.specialties.join(", ")}</p>
-                </CardBox>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {h.city} · {h.specialties.join(", ")}
+                    </p>
+                  </CardBox>
+                </Link>
               </li>
             ))}
             <li>
@@ -197,6 +193,9 @@ function Home() {
           </ul>
         </div>
       </Section>
+
+      {/* Doctors */}
+      <FeaturedDoctors />
 
       {/* Estimates */}
       <Section>
