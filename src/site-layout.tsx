@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MessageCircle, Menu, Phone, X, FileText } from "lucide-react";
+import { MessageCircle, Menu, Moon, Phone, Sun, X, FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import markUrl from "@/assets/medibridge-mark.png";
@@ -8,6 +8,7 @@ import { legalNav, primaryNav, secondaryNav, site } from "@/site-data";
 import { Container, EnquiryButton, PageLink, phoneHref, whatsappHref } from "@/site-ui";
 
 const NOTICE_KEY = "medibridge-notice-v1";
+const THEME_KEY = "medibridge-theme";
 
 /** Slim notice about how enquiry data and reports are handled. */
 function ConsentNotice() {
@@ -50,6 +51,48 @@ function ConsentNotice() {
         </button>
       </Container>
     </div>
+  );
+}
+
+/** Light / dark switch. Remembers the choice; first visit follows the phone's setting. */
+function ThemeToggle() {
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem(THEME_KEY);
+    } catch {
+      /* storage can be blocked; fall back to the device setting */
+    }
+    const isDark = saved
+      ? saved === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.classList.toggle("dark", isDark);
+    setDark(isDark);
+  }, []);
+
+  function toggle() {
+    const next = !dark;
+    document.documentElement.classList.toggle("dark", next);
+    setDark(next);
+    try {
+      localStorage.setItem(THEME_KEY, next ? "dark" : "light");
+    } catch {
+      /* the choice just won't be remembered */
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border hover:bg-accent"
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Light mode" : "Dark mode"}
+    >
+      {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+    </button>
   );
 }
 
@@ -100,6 +143,7 @@ function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <EnquiryButton className="hidden h-10 sm:inline-flex" label="Enquire now" />
+          <ThemeToggle />
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden"
