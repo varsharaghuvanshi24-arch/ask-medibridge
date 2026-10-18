@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { FeaturedDoctors, HospitalCard } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
+import { GuestPhotos, HotelPhotos } from "@/photo-wall";
 import { faqs, hospitals, site, treatments } from "@/site-data";
 import { IntroVideo, Steps } from "@/site-pages";
 import {
@@ -176,6 +177,10 @@ function Home() {
 
       {/* Doctors */}
       <FeaturedDoctors />
+
+      {/* Guest photos and hotel stay photos (hidden until photos are added) */}
+      <GuestPhotos />
+      <HotelPhotos />
 
       {/* Estimates */}
       <Section>
