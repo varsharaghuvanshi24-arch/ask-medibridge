@@ -45,16 +45,16 @@ function Home() {
       <div className="bg-surface">
         <Container className="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:py-20">
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
+            <p className="hero-in hero-d1 mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
               Medical travel to {site.destination}
             </p>
-            <h1 className="text-balance text-4xl font-semibold leading-[1.1] text-primary sm:text-5xl lg:text-6xl">
+            <h1 className="hero-in hero-d2 text-balance text-4xl font-semibold leading-[1.1] text-primary sm:text-5xl lg:text-6xl">
               {site.tagline}
             </h1>
-            <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
+            <p className="hero-in hero-d3 mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
               {site.description}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="hero-in hero-d4 mt-8 flex flex-wrap gap-3">
               <EnquiryButton label="Send your reports" />
               <PageLink
                 page="treatments"
@@ -70,7 +70,7 @@ function Home() {
             width={1600}
             height={1104}
             fetchPriority="high"
-            className="aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
+            className="hero-img-in aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
           />
         </Container>
       </div>
