@@ -14,11 +14,27 @@ import { Section, SectionHeading } from "@/site-ui";
  */
 
 // Hotel / stay photos (Pinterest-style wall under the doctors).
-export const HOTEL_PHOTOS: string[] = [];
+export const HOTEL_PHOTOS: string[] = [
+  "https://ibb.co/TxWFWxqP",
+  "https://ibb.co/SDnK3J8m",
+  "https://ibb.co/SDhqfZkQ",
+  "https://ibb.co/TD85qxnJ",
+  "https://ibb.co/SDMKxT4b",
+  "https://ibb.co/7tBhXd5r",
+  "https://ibb.co/r2CSQLtL",
+  "https://ibb.co/zTWP4Bh9",
+  "https://ibb.co/rGBFr0d8",
+  "https://ibb.co/Gv5Yy850",
+];
 
 // Guest photos (plain pictures, no boxes).
-export const GUEST_PHOTOS: string[] = [];
-
+export const GUEST_PHOTOS: string[] = [
+  "https://ibb.co/PGqzM19Q",
+  "https://ibb.co/RGGTD2gf",
+  "https://ibb.co/PsMpqJdP",
+  "https://ibb.co/gLcxXMNC",
+  "https://ibb.co/b5bdLvbY",
+];
 function WallImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
