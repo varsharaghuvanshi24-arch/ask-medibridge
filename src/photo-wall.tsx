@@ -21,7 +21,10 @@ const HOTEL_LINKS: string[] = [];
 const GUEST_LINKS: string[] = [];
 
 function fromFolder(files: Record<string, string>): string[] {
-  return Object.values(files).filter((v): v is string => Boolean(v));
+  return Object.entries(files)
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+    .map(([, v]) => v)
+    .filter((v): v is string => Boolean(v));
 }
 
 const hotelFiles = import.meta.glob("/src/assets/hotel/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
