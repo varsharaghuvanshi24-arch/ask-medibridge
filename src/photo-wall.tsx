@@ -33,7 +33,7 @@ const hotelFiles = import.meta.glob("/src/assets/hotel/*.{jpg,jpeg,png,webp,JPG,
   import: "default",
 }) as Record<string, string>;
 
-const guestFiles = import.meta.glob("/src/assets/guests/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
+const guestFiles = import.meta.glob("/src/assets/Guests/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
   eager: true,
   query: "?url",
   import: "default",
