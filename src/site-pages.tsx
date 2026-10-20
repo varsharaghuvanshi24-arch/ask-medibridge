@@ -293,7 +293,7 @@ export function IntroVideo() {
       className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-md"
     >
       <source
-        src="/__l5e/assets-v1/3eb34765-d38b-4f0b-9c36-498393903f1d/medibridge-introduction.mp4"
+        src="/medibridge-introduction.mp4"
         type="video/mp4"
       />
       Your browser cannot play this video.
