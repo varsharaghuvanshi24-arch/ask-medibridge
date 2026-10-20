@@ -120,8 +120,8 @@ function GlassRoom({ children }: { children: ReactNode }) {
       return;
     }
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
           setOpen(true);
           io.disconnect();
         }
