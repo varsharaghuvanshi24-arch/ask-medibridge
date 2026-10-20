@@ -21,9 +21,10 @@ const HOTEL_LINKS: string[] = [];
 const GUEST_LINKS: string[] = [];
 
 function fromFolder(files: Record<string, string>): string[] {
-  return Object.keys(files)
-    .sort()
-    .map((k) => files[k]);
+  return Object.entries(files)
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+    .map(([, v]) => v)
+    .filter((v): v is string => Boolean(v));
 }
 
 const hotelFiles = import.meta.glob("/src/assets/hotel/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
@@ -32,7 +33,7 @@ const hotelFiles = import.meta.glob("/src/assets/hotel/*.{jpg,jpeg,png,webp,JPG,
   import: "default",
 }) as Record<string, string>;
 
-const guestFiles = import.meta.glob("/src/assets/guests/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
+const guestFiles = import.meta.glob("/src/assets/Guests/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
   eager: true,
   query: "?url",
   import: "default",
@@ -119,8 +120,8 @@ function GlassRoom({ children }: { children: ReactNode }) {
       return;
     }
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
           setOpen(true);
           io.disconnect();
         }
