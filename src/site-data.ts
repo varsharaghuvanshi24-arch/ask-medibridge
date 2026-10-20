@@ -22,7 +22,7 @@ export const site = {
   // placeholder on the contact page, and the call / WhatsApp buttons fall back
   // to the enquiry form.
   contact: {
-    email: "medibridgeinc@gmail.com",
+    email: "info@medibridgeinc.com",
     phone: "+91 92118 25898", // include country code
     whatsapp: "919211825898", // digits only with country code
     address: "Plot No. 1199, Sector 46, Near Bakhtawar Chowk, Gurugram, Haryana 122003, India",
