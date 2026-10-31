@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { DoctorProfile } from "@/directory";
-import { doctorBySlug, site } from "@/site-data";
+import { SITE_URL, doctorBySlug, site } from "@/site-data";
 
 export const Route = createFileRoute("/doctors/$slug")({
   beforeLoad: ({ params }) => {
@@ -11,13 +11,16 @@ export const Route = createFileRoute("/doctors/$slug")({
     const d = doctorBySlug(params.slug);
     const title = d ? `${d.name}, ${d.speciality} | ${site.shortName}` : site.name;
     const description = d ? `${d.bio} ${d.hospital}.` : site.description;
+    const url = `${SITE_URL}/doctors/${params.slug}`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
       scripts: d
         ? [
             {

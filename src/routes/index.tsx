@@ -12,7 +12,7 @@ import { FeaturedDoctors, HospitalCard } from "@/directory";
 import { EnquiryForm } from "@/enquiry-form";
 import { HeroMap } from "@/hero-map";
 import { GuestPhotos, HotelPhotos } from "@/photo-wall";
-import { faqs, hospitals, site, treatments } from "@/site-data";
+import { SITE_URL, faqs, hospitals, site, treatments } from "@/site-data";
 import { IntroVideo, OfficeMap, Steps } from "@/site-pages";
 import {
   CardBox,
@@ -33,8 +33,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: `${site.name} | Medical travel to ${site.destination}` },
       { property: "og:description", content: site.description },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/` },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
   }),
   component: Home,
 });
