@@ -10,6 +10,9 @@
  * delete the line) once you have the real information.
  */
 
+// The public base URL used for canonical links, og:url and the sitemap.
+export const SITE_URL = "https://medibridgeinc.com";
+
 export const site = {
   name: "Medibridge International",
   shortName: "Medibridge",

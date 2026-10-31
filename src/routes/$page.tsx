@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { pageMeta, site } from "@/site-data";
+import { SITE_URL, pageMeta, site } from "@/site-data";
 import { renderPage } from "@/site-pages";
 
 // One route serves all top-level content pages (/about, /hospitals, /visa, ...).
@@ -13,13 +13,16 @@ export const Route = createFileRoute("/$page")({
     const meta = pageMeta[params.page];
     const title = meta ? `${meta.title} | ${site.shortName}` : site.name;
     const description = meta?.description ?? site.description;
+    const url = `${SITE_URL}/${params.page}`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: PageRoute,

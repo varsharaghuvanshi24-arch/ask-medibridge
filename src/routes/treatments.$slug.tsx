@@ -2,7 +2,7 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check } from "lucide-react";
 
 import { EnquiryForm } from "@/enquiry-form";
-import { site, treatments } from "@/site-data";
+import { SITE_URL, site, treatments } from "@/site-data";
 import { CardBox, PageHero, Section } from "@/site-ui";
 
 export const Route = createFileRoute("/treatments/$slug")({
@@ -13,13 +13,16 @@ export const Route = createFileRoute("/treatments/$slug")({
     const t = treatments.find((x) => x.slug === params.slug);
     const title = t ? `${t.name} | ${site.shortName}` : site.name;
     const description = t?.summary ?? site.description;
+    const url = `${SITE_URL}/treatments/${params.slug}`;
     return {
       meta: [
         { title },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:url", content: url },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   component: TreatmentDetail,

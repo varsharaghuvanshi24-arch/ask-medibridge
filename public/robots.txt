@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://medibridgeinc.lovable.app/sitemap.xml
+Sitemap: https://medibridgeinc.com/sitemap.xml
