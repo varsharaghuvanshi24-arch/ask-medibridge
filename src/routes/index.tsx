@@ -28,15 +28,50 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${site.name} | Medical travel to ${site.destination}` },
-      { name: "description", content: site.description },
-      { property: "og:title", content: `${site.name} | Medical travel to ${site.destination}` },
-      { property: "og:description", content: site.description },
+      { title: site.homeSeoTitle },
+      { name: "description", content: site.homeDescription },
+      { property: "og:title", content: site.homeSeoTitle },
+      { property: "og:description", content: site.homeDescription },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/` },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "MedicalBusiness",
+          name: site.name,
+          url: `${SITE_URL}/`,
+          description: site.homeDescription,
+          telephone: site.contact.phone,
+          email: site.contact.email,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Plot No. 1199, Sector 46, Near Bakhtawar Chowk",
+            addressLocality: "Gurugram",
+            addressRegion: "Haryana",
+            postalCode: "122003",
+            addressCountry: "IN",
+          },
+          areaServed: "IN",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
   }),
   component: Home,
 });
@@ -53,7 +88,7 @@ function Home() {
               Medical travel to {site.destination}
             </p>
             <h1 className="hero-in hero-d2 text-balance text-4xl font-semibold leading-[1.1] text-primary sm:text-5xl lg:text-6xl">
-              {site.tagline}
+              {site.homeH1}
             </h1>
             <p className="hero-in hero-d3 mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
               {site.description}
