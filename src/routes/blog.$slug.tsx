@@ -1,7 +1,7 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
-import { SITE_URL, posts, site } from "@/site-data";
+import { SITE_URL, posts, seoTitle, site, trimDescription } from "@/site-data";
 import { EnquiryButton, PageHero, PlaceholderNote, Section } from "@/site-ui";
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -10,8 +10,8 @@ export const Route = createFileRoute("/blog/$slug")({
   },
   head: ({ params }) => {
     const p = posts.find((x) => x.slug === params.slug);
-    const title = p ? `${p.title} | ${site.shortName}` : site.name;
-    const description = p?.summary ?? site.description;
+    const title = p ? seoTitle(p.title) : site.name;
+    const description = p ? trimDescription(p.summary) : site.description;
     const url = `${SITE_URL}/blog/${params.slug}`;
     return {
       meta: [

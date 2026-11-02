@@ -2,8 +2,27 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check } from "lucide-react";
 
 import { EnquiryForm } from "@/enquiry-form";
-import { SITE_URL, site, treatments } from "@/site-data";
+import { SITE_URL, seoTitle, site, treatments } from "@/site-data";
 import { CardBox, PageHero, Section } from "@/site-ui";
+
+// Copy-paste SEO titles for the priority treatment pages (user-supplied).
+const treatmentSeo: Record<string, { title: string; description: string }> = {
+  cardiology: {
+    title: "Cardiology & Heart Surgery in India - Cost Estimate | Medibridge",
+    description:
+      "Get a cardiology second opinion and heart surgery cost estimate in India. Share your reports and receive a written treatment plan from Medibridge.",
+  },
+  orthopaedics: {
+    title: "Hip & Knee Replacement in India - Cost & Best Hospitals | Medibridge",
+    description:
+      "Plan hip or knee replacement surgery in India with Medibridge. Compare leading hospitals and receive a written cost estimate before you travel.",
+  },
+  oncology: {
+    title: "Cancer Treatment in India - Oncology Opinion & Cost | Medibridge",
+    description:
+      "Get an oncology second opinion and cancer treatment cost estimate in India, with a written plan coordinated by Medibridge International.",
+  },
+};
 
 export const Route = createFileRoute("/treatments/$slug")({
   beforeLoad: ({ params }) => {
@@ -11,8 +30,9 @@ export const Route = createFileRoute("/treatments/$slug")({
   },
   head: ({ params }) => {
     const t = treatments.find((x) => x.slug === params.slug);
-    const title = t ? `${t.name} | ${site.shortName}` : site.name;
-    const description = t?.summary ?? site.description;
+    const override = treatmentSeo[params.slug];
+    const title = override?.title ?? seoTitle(t?.name ?? site.name);
+    const description = override?.description ?? t?.summary ?? site.description;
     const url = `${SITE_URL}/treatments/${params.slug}`;
     return {
       meta: [

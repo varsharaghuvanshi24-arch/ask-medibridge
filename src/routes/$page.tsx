@@ -11,7 +11,7 @@ export const Route = createFileRoute("/$page")({
   },
   head: ({ params }) => {
     const meta = pageMeta[params.page];
-    const title = meta ? `${meta.title} | ${site.shortName}` : site.name;
+    const title = meta?.title ?? site.name;
     const description = meta?.description ?? site.description;
     const url = `${SITE_URL}/${params.page}`;
     return {

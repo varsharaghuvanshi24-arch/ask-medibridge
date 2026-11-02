@@ -21,6 +21,11 @@ export const site = {
   tagline: "A clear path to the right hospital, doctor and care plan.",
   description:
     "Medibridge International helps patients from abroad share their medical reports, compare treatment options and plan travel for care in India, with one coordinator guiding each step.",
+  // Home page SEO. Keep the title under 60 characters, the description under 160.
+  homeSeoTitle: "Medical Tourism Company in India | Medibridge International",
+  homeH1: "Medical Tourism in India with Medibridge International",
+  homeDescription:
+    "Medibridge International plans medical travel to India: the right hospital and doctor, a written treatment plan and a cost estimate.",
   // Leave a value empty ("") until you have the real one. Empty values show a
   // placeholder on the contact page, and the call / WhatsApp buttons fall back
   // to the enquiry form.
@@ -850,60 +855,90 @@ export const termsSections: LegalSection[] = [
 /* Page titles and descriptions (used for browser tabs and search)     */
 /* ------------------------------------------------------------------ */
 
-export const pageMeta: Record<string, { title: string; description: string }> = {
+export const pageMeta: Record<
+  string,
+  { title: string; description: string; h1?: string }
+> = {
   about: {
-    title: "About Medibridge",
+    title: "About Medibridge International | Medical Travel India",
+    h1: "About Medibridge International",
     description:
-      "Who we are and how Medibridge International coordinates medical travel for patients from abroad.",
+      "Medibridge International coordinates medical travel to India — one coordinator from your first enquiry to follow-up after you return home.",
   },
   hospitals: {
-    title: "Partner hospitals",
-    description: "Hospitals Medibridge International works with for international patients.",
+    title: "Partner Hospitals in India for Medical Tourism | Medibridge",
+    h1: "Partner Hospitals in India for Medical Tourism",
+    description:
+      "Compare accredited partner hospitals in Gurugram and New Delhi for treatment in India, with Medibridge International coordinating your care.",
   },
   doctors: {
-    title: "Doctors and specialists",
+    title: "Doctors in India for International Patients | Medibridge",
+    h1: "Doctors in India for International Patients",
     description:
-      "Specialists who review international patient cases through Medibridge International.",
+      "Meet the specialists who review international patient cases through Medibridge International at leading hospitals in Gurugram and New Delhi.",
   },
   treatments: {
-    title: "Treatments and specialities",
+    title: "Medical Treatments in India — Opinion & Cost | Medibridge",
+    h1: "Medical Treatments in India",
     description:
-      "Treatment areas Medibridge International can help you explore, with the documents to prepare for each.",
+      "Explore treatment areas in India — heart, joints, cancer and more — with the reports to prepare for a specialist opinion and cost estimate.",
   },
   services: {
-    title: "Our services",
+    title: "Medical Travel Services in India | Medibridge International",
+    h1: "Medical Travel Services in India",
     description:
-      "Medical opinion, estimates, visa support, travel and follow-up coordination from Medibridge International.",
+      "Medical opinion coordination, written estimates, visa support, airport pickup and follow-up — services for patients travelling to India.",
   },
   consultation: {
-    title: "Request a consultation",
+    title: "Online Second Opinion & Consultation in India | Medibridge",
+    h1: "Online Second Opinion and Consultation in India",
     description:
-      "How to get a specialist opinion on your reports through Medibridge International.",
+      "Request an online medical second opinion from specialists in India. Share your reports and receive a written plan and cost estimate.",
   },
   visa: {
-    title: "Medical visa guidance",
+    title: "Medical Visa for India — Patient Guide | Medibridge",
+    h1: "Medical Visa for India",
     description:
-      "A practical checklist for planning a medical visa, with pointers to official sources.",
+      "A practical guide to the medical visa for India: invitation letter, document checklist and links to official sources. Medibridge International.",
   },
   gallery: {
-    title: "Gallery",
-    description: "Images and the introduction video from Medibridge International.",
+    title: "Gallery | Medibridge International Medical Travel",
+    h1: "Gallery",
+    description:
+      "Photos and an introduction video from Medibridge International, your coordinator for medical travel to India.",
   },
   blog: {
-    title: "Blog and guides",
-    description: "Practical guides for patients planning treatment abroad.",
+    title: "Medical Travel Blog & Guides | Medibridge International",
+    h1: "Medical Travel Blog and Guides",
+    description:
+      "Guides for patients planning medical treatment in India: reports, questions to ask, travel planning and cost estimates.",
   },
   contact: {
-    title: "Contact and enquiry",
-    description: "Send an enquiry or find contact details for Medibridge International.",
+    title: "Contact Medibridge International | Free Quote",
+    h1: "Contact Medibridge International",
+    description:
+      "Contact Medibridge International for medical treatment in India. Send your reports and get a written plan and cost estimate.",
   },
   privacy: {
-    title: "Privacy policy",
+    title: "Privacy Policy | Medibridge International",
+    h1: "Privacy Policy",
     description:
-      "How Medibridge International handles your enquiry and medical report information.",
+      "How Medibridge International collects, uses and protects your enquiry and medical report information.",
   },
   terms: {
-    title: "Terms of use",
-    description: "Terms for using the Medibridge International website.",
+    title: "Terms of Use | Medibridge International",
+    h1: "Terms of Use",
+    description: "Terms of use for the Medibridge International website.",
   },
 };
+
+/** Adds the " | Medibridge" suffix only when the result stays under 60 characters. */
+export function seoTitle(base: string): string {
+  const suffix = " | Medibridge";
+  return base.length + suffix.length <= 60 ? `${base}${suffix}` : base;
+}
+
+/** Trims a meta description to stay under 160 characters. */
+export function trimDescription(text: string): string {
+  return text.length <= 159 ? text : `${text.slice(0, 156).trimEnd()}...`;
+}

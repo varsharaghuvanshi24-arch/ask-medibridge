@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Check, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import arrivalImg from "@/assets/medibridge-arrival.jpg";
 import consultationImg from "@/assets/medibridge-consultation.jpg";
@@ -39,7 +39,7 @@ function Page({ slug, children }: { slug: string; children: ReactNode }) {
   const meta = pageMeta[slug];
   return (
     <>
-      <PageHero title={meta?.title ?? site.name} intro={meta?.description ?? ""} />
+      <PageHero title={meta?.h1 ?? meta?.title ?? site.name} intro={meta?.description ?? ""} />
       {children}
     </>
   );
@@ -281,23 +281,56 @@ function Gallery() {
 }
 
 export function IntroVideo() {
+  const holderRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  // Lazy-load: mount the video element only when the player nears the viewport.
+  useEffect(() => {
+    const el = holderRef.current;
+    if (!el || inView) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [inView]);
+
   return (
-    <video
-      controls
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      poster={posterImg}
+    <div
+      ref={holderRef}
       className="aspect-video w-full overflow-hidden rounded-3xl bg-black shadow-md"
     >
-      <source
-        src="/medibridge-introduction.mp4"
-        type="video/mp4"
-      />
-      Your browser cannot play this video.
-    </video>
+      {inView ? (
+        <video
+          controls
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={posterImg}
+          className="h-full w-full"
+        >
+          <source src="/medibridge-introduction.mp4" type="video/mp4" />
+          Your browser cannot play this video.
+        </video>
+      ) : (
+        <img
+          src={posterImg}
+          alt="Introduction video of Medibridge International, a coordinator for medical travel to India"
+          width={1600}
+          height={900}
+          loading="lazy"
+          className="h-full w-full object-cover"
+        />
+      )}
+    </div>
   );
 }
 

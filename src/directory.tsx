@@ -334,7 +334,7 @@ export function HospitalsPage() {
   return (
     <>
       <PageHero
-        title="Partner hospitals"
+        title="Partner Hospitals in India for Medical Tourism"
         intro={`${hospitals.length} accredited super-specialty hospitals across Gurugram and New Delhi. These are hospitals we coordinate treatment at.`}
       />
       <Section>
@@ -449,7 +449,7 @@ export function DoctorsPage() {
   return (
     <>
       <PageHero
-        title="Doctors and specialists"
+        title="Doctors in India for International Patients"
         intro={`A curated panel of ${doctors.length} specialists across our partner hospitals.`}
       />
       <Section>
