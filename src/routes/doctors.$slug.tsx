@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { DoctorProfile } from "@/directory";
-import { SITE_URL, doctorBySlug, site } from "@/site-data";
+import { SITE_URL, doctorBySlug, seoTitle, site, trimDescription } from "@/site-data";
 
 export const Route = createFileRoute("/doctors/$slug")({
   beforeLoad: ({ params }) => {
@@ -9,8 +9,8 @@ export const Route = createFileRoute("/doctors/$slug")({
   },
   head: ({ params }) => {
     const d = doctorBySlug(params.slug);
-    const title = d ? `${d.name}, ${d.speciality} | ${site.shortName}` : site.name;
-    const description = d ? `${d.bio} ${d.hospital}.` : site.description;
+    const title = d ? seoTitle(`${d.name}, ${d.speciality}`) : site.name;
+    const description = d ? trimDescription(`${d.bio} ${d.hospital}.`) : site.description;
     const url = `${SITE_URL}/doctors/${params.slug}`;
     return {
       meta: [
